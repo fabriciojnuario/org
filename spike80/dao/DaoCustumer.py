@@ -4,41 +4,43 @@ import spike80.domain.Custumer as custumer
 import spike80.dao.DaoConnection as dc
 
 
+
 class DAOCustumer:
     def __int__(self):
-        self.connection = dc.DaoConnection()
-        self.custumers = custumer.Custumer()
+        print("Contructor function\n")
 
     def listaClientes(self):
+        connection = dc.DaoConnection()
+        customers = custumer.Custumer()
         try:
-            cursor = self.connection
+            cursor = connection.get_connection()
             sql_select_query = """ select * from public."cliente" """
 
             cursor.execute(sql_select_query)
 
             registers = cursor.fetchall()
             for register in registers:
-                self.custumers.rg_cliente = register[0]
-                self.custumers.nome = register[1]
-                self.custumers.sexo = register[2]
-                self.custumers.tel = register[3]
+                customers.rg_cliente = register[0]
+                customers.nome = register[1]
+                customers.sexo = register[2]
+                customers.tel = register[3]
             print(registers)
-            print(repr(self.custumers))
+            print(repr(customers))
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print("No Data\n", error)
             else:
                 print("No connection\n")
 
         finally:
             # closing database connection
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print("Connection closed.\n")
 
-        return self.custumers
+        return customers
 
     def selecionaCliente(self, rg_cliente):
         try:
