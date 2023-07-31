@@ -1,17 +1,17 @@
 import psycopg2
 
-from spike80.dao.DaoConnection import DaoConnection
-from spike80.domain.Custumer import Custumer
+import spike80.domain.Custumer as custumer
+import spike80.dao.DaoConnection as dc
 
 
 class DAOCustumer:
     def __int__(self):
-        self.connection = DaoConnection()
-        self.custumers = Custumer()
+        self.connection = dc.DaoConnection()
+        self.custumers = custumer.Custumer()
 
     def listaClientes(self):
         try:
-            cursor = self.connection.cursor()
+            cursor = self.connection
             sql_select_query = """ select * from public."cliente" """
 
             cursor.execute(sql_select_query)
@@ -44,7 +44,7 @@ class DAOCustumer:
         try:
             cursor = self.connection.cursor()
             sql_select_query = """ select * from public."cliente" where "rg" = %s """
-            cursor.execute(sql_select_query, rg_cliente)
+            cursor.execute(sql_select_query, (rg_cliente,))
             registry = cursor.fetchone()
             self.custumers.rg_cliente = registry[0]
             self.custumers.nome = registry[1]

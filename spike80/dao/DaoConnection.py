@@ -13,7 +13,9 @@ class DaoConnection:
                                                port="5432",
                                                database="hotel")
 
-        except (Exception, psycopg2.Error) as error:
-            print(f"Error in connect to database\n", error)
+            print('Connection established\n')
 
-        return self.connection
+        except (Exception, psycopg2.Error) as error:
+            print("Error in connect to database\n", error)
+
+        return self.connection.cursor()

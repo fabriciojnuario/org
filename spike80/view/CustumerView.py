@@ -74,6 +74,7 @@ class CustumerView:
             self.id = 0
             self.iid = 0
             registers = self.daocustumer.listaClientes()
+            print(type(registers))
             for registry in registers:
                 id_custumer = registry[0]
                 name = registry[1]
