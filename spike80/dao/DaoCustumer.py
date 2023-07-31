@@ -4,20 +4,17 @@ import spike80.domain.Custumer as custumer
 import spike80.dao.DaoConnection as dc
 
 
-
 class DAOCustumer:
     def __int__(self):
         print("Contructor function\n")
 
     def listaClientes(self):
-        connection = dc.DaoConnection()
+        connection = dc.DaoConnection().get_connection()
         customers = custumer.Custumer()
         try:
-            cursor = connection.get_connection()
+            cursor = connection.cursor()
             sql_select_query = """ select * from public."cliente" """
-
             cursor.execute(sql_select_query)
-
             registers = cursor.fetchall()
             for register in registers:
                 customers.rg_cliente = register[0]
