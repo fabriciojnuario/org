@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import spike80.dao.DaoCustumer as dao
+import spike80.domain.Custumer as cs
 
 
 class CustumerView:
@@ -70,19 +71,18 @@ class CustumerView:
         self.load_init_data()
 
     def load_init_data(self):
+        custumers = cs.Custumer()
         try:
             self.id = 0
             self.iid = 0
             registers = self.daocustumer.listaClientes()
             print(type(registers))
             for registry in registers:
-                id_custumer = registry[0]
-                name = registry[1]
-                genre = registry[2]
-                phone = registry[3]
-
+                custumers = vars(registry)
+                print(custumers)
                 self.treeCustumers.insert('', tk.END, iid=self.iid,
-                                          values=(id_custumer, name, genre, phone))
+                                          values=(custumers.rg_cliente, custumers.nome,
+                                                  custumers.sexo, custumers.tel))
 
                 self.iid = self.iid + 1
                 self.id = self.id + 1
