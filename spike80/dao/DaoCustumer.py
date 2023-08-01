@@ -11,6 +11,7 @@ class DAOCustumer:
     def listaClientes(self):
         connection = dc.DaoConnection().get_connection()
         customers = custumer.Custumer()
+
         try:
             cursor = connection.cursor()
             sql_select_query = """ select * from public."cliente" """
