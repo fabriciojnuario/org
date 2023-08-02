@@ -71,18 +71,16 @@ class CustumerView:
         self.load_init_data()
 
     def load_init_data(self):
-        custumers = cs.Custumer()
         try:
             self.id = 0
             self.iid = 0
             registers = self.daocustumer.listaClientes()
             print(type(registers))
-            for registry in registers:
-                custumers = vars(registry)
-                print(custumers)
+            for i in range(len(registers)):
+                custumer = registers[i]
+                print(custumer)
                 self.treeCustumers.insert('', tk.END, iid=self.iid,
-                                          values=(custumers.rg_cliente, custumers.nome,
-                                                  custumers.sexo, custumers.tel))
+                                          values=(custumer[0], custumer[1], custumer[2], custumer[3]))
 
                 self.iid = self.iid + 1
                 self.id = self.id + 1

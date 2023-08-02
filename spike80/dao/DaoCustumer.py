@@ -1,6 +1,6 @@
 import psycopg2
 
-import spike80.domain.Custumer as custumer
+from spike80.domain.Custumer import Custumer
 import spike80.dao.DaoConnection as dc
 
 
@@ -10,20 +10,18 @@ class DAOCustumer:
 
     def listaClientes(self):
         connection = dc.DaoConnection().get_connection()
-        customers = custumer.Custumer()
-
+        customer = Custumer()
+        custumers = []
         try:
             cursor = connection.cursor()
             sql_select_query = """ select * from public."cliente" """
             cursor.execute(sql_select_query)
             registers = cursor.fetchall()
-            for register in registers:
-                customers.rg_cliente = register[0]
-                customers.nome = register[1]
-                customers.sexo = register[2]
-                customers.tel = register[3]
+            for i in range(len(registers)):
+                customer = registers[i]
+                custumers.append(customer)
             print(registers)
-            print(repr(customers))
+            print(custumers)
 
         except(Exception, psycopg2.Error) as error:
             if connection:
@@ -38,7 +36,7 @@ class DAOCustumer:
                 connection.close()
                 print("Connection closed.\n")
 
-        return customers
+        return custumers
 
     def selecionaCliente(self, rg_cliente):
         try:
