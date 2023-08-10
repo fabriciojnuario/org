@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
-import spike80.dao.DaoCustumer as dao
-import spike80.domain.Custumer as cs
+
+from spike80.domain.Custumer import Custumer
 
 
 class CustumerView:
 
     def __init__(self, win):
-        self.daocustumer = dao.DAOCustumer()
+        self.custumer = Custumer()
 
         self.lb_idcustumer = tk.Label(win, text='Id Custumer:')
         self.lb_name_custumer = tk.Label(win, text='Name: ')
@@ -74,13 +74,14 @@ class CustumerView:
         try:
             self.id = 0
             self.iid = 0
-            registers = self.daocustumer.listaClientes()
+            registers = self.custumer.get_custumers()
             print(type(registers))
             for i in range(len(registers)):
+                custumer = Custumer()
                 custumer = registers[i]
                 print(custumer)
                 self.treeCustumers.insert('', tk.END, iid=self.iid,
-                                          values=(custumer[0], custumer[1], custumer[2], custumer[3]))
+                                          values=(custumer.rg_cliente, custumer.nome, custumer.sexo, custumer.tel))
 
                 self.iid = self.iid + 1
                 self.id = self.id + 1

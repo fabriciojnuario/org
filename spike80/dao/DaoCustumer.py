@@ -1,6 +1,6 @@
 import psycopg2
 
-from spike80.domain.Custumer import Custumer
+
 import spike80.dao.DaoConnection as dc
 
 
@@ -10,7 +10,6 @@ class DAOCustumer:
 
     def listaClientes(self):
         connection = dc.DaoConnection().get_connection()
-        customer = Custumer()
         custumers = []
         try:
             cursor = connection.cursor()

@@ -2,24 +2,32 @@ import spike80.dao.DaoCustumer as dc
 
 
 class Custumer:
-    def __int__(self, rg_cliente):
-        self.register = dc.DAOCustumer.selecionaCliente(rg_cliente)
+    def __int__(self, rg_cliente, nome, sexo, tel):
+        self.rg_cliente = rg_cliente
+        self.nome = nome
+        self.sexo = sexo
+        self.tel = tel
 
-        self.rg_cliente = self.register[0]
-        self.nome = self.register[1]
-        self.sexo = self.register[2]
-        self.tel = self.register[3]
-
-    def __get__(self, instance, owner):
     def get_custumers(self):
-        register = dc.DAOCustumer.listaClientes()
+        connection = dc.DAOCustumer()
+        registers = connection.listaClientes()
         custumers = []
-        for i in range(len(register)):
+        for i in range(len(registers)):
             custumer = Custumer()
-            custumer.rg_cliente = register[i][0]
-            custumer.nome = register[i][1]
-            custumer.sexo = register[i][2]
-            custumer.tel = register[i][3]
+            custumer.rg_cliente = registers[i][0]
+            custumer.nome = registers[i][1]
+            custumer.sexo = registers[i][2]
+            custumer.tel = registers[i][3]
             custumers.append(custumer)
 
         return custumers
+
+    def get_custumer(self):
+        register = dc.DAOCustumer.selecionaCliente()
+        customer = Custumer()
+        customer.rg_cliente = register[0]
+        customer.nome = register[1]
+        customer.sexo = register[2]
+        customer.tel = register[3]
+
+        return customer
