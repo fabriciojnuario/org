@@ -77,7 +77,6 @@ class CustumerView:
             registers = self.custumer.get_custumers()
             print(type(registers))
             for i in range(len(registers)):
-                custumer = Custumer()
                 custumer = registers[i]
                 print(custumer)
                 self.treeCustumers.insert('', tk.END, iid=self.iid,
