@@ -141,7 +141,7 @@ class CustumerView:
     def delete_custumer(self):
         try:
             custumers = self.read_fields()
-            self.daocustumer.excluirCliente(custumers[0])
+            self.custumer.delete_customer(custumers[0])
 
             self.treeCustumers.delete(*self.treeCustumers.get_children())
             self.load_init_data()

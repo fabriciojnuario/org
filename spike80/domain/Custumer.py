@@ -31,3 +31,23 @@ class Custumer:
         customer.tel = register[3]
 
         return customer
+
+    def insert_customer(self, rg_cliente, nome, sexo, tel):
+
+        record_to_insert = (rg_cliente, nome, sexo, tel)
+        if dc.DAOCustumer.inserirClientes(record_to_insert):
+            print("Operation OK\n")
+
+    def update_customer(self, rg_cliente, nome, sexo, tel):
+
+        record_to_insert = (rg_cliente, nome, sexo, tel)
+        if dc.DAOCustumer.atualizaCliente(record_to_insert):
+            print("Operation OK\n")
+
+    def delete_customer(self, rg_cliente):
+
+        if dc.DAOCustumer.excluirCliente(rg_cliente):
+            print("Operation OK\n")
+
+
+
