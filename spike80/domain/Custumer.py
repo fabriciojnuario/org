@@ -46,7 +46,7 @@ class Custumer:
 
     def delete_customer(self, rg_cliente):
 
-        if dc.DAOCustumer.excluirCliente(rg_cliente):
+        if dc.DAOCustumer.excluirCliente(int(rg_cliente)):
             print("Operation OK\n")
 
 
