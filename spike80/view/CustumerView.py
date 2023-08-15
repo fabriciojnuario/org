@@ -102,7 +102,7 @@ class CustumerView:
 
     def read_fields(self):
         try:
-            id_custumer = self.txt_id_custumer.get()
+            id_custumer = int(self.txt_id_custumer.get())
             name_custumer = self.txt_name_custumer.get()
             genre_custumer = self.txt_genre_custumer.get()
             phone_custumer = self.txt_phone_custumer.get()

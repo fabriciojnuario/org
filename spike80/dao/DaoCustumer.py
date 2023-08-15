@@ -129,14 +129,14 @@ class DAOCustumer:
 
     def excluirCliente(self, rg_cliente):
         try:
-            self.custumers.rg_cliente = rg_cliente
-            cursor = self.connection.cursor()
+            connection = dc.DaoConnection.get_connection()
+            cursor = connection.cursor()
             sql_delete_query = """delete from public."cliente" where
                                   "rg" = %s"""
 
-            cursor.execute(sql_delete_query, (self.custumers.rg_cliente,))
+            cursor.execute(sql_delete_query, (rg_cliente,))
 
-            self.connection.commit()
+            connection.commit()
             count = cursor.rowcount
             print(f"Delete operation ok", count, f"row(s) affected\n")
 
