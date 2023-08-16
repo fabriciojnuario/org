@@ -129,7 +129,7 @@ class DAOCustumer:
 
     def excluirCliente(self, rg_cliente):
         try:
-            connection = dc.DaoConnection.get_connection()
+            connection = dc.DaoConnection().get_connection()
             cursor = connection.cursor()
             sql_delete_query = """delete from public."cliente" where
                                   "rg" = %s"""

@@ -47,8 +47,9 @@ class Custumer:
     def delete_customer(self, rg_cliente):
         customer = Custumer()
         customer.rg_cliente = rg_cliente
+        id__ = int(customer.rg_cliente)
         connection = dc.DAOCustumer()
-        connection.excluirCliente(customer.rg_cliente)
+        connection.excluirCliente(id__)
 
 
 
