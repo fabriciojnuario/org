@@ -141,13 +141,13 @@ class DAOCustumer:
             print(f"Delete operation ok", count, f"row(s) affected\n")
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print("Error in delete operation\n", error)
             else:
                 print(f"No connection\n")
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print(f"Connection closed\n")

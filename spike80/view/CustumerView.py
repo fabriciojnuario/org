@@ -142,7 +142,6 @@ class CustumerView:
         try:
             custumers = self.read_fields()
             self.custumer.delete_customer(custumers[0])
-
             self.treeCustumers.delete(*self.treeCustumers.get_children())
             self.load_init_data()
             self.clear_fields()
