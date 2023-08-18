@@ -33,16 +33,24 @@ class Custumer:
         return customer
 
     def insert_customer(self, rg_cliente, nome, sexo, tel):
-
+        customer = Custumer()
         record_to_insert = (rg_cliente, nome, sexo, tel)
-        if dc.DAOCustumer.inserirClientes(record_to_insert):
+        customer.rg_cliente = record_to_insert[0]
+        customer.nome = record_to_insert[1]
+        customer.sexo = record_to_insert[2]
+        customer.tel = record_to_insert[3]
+        if dc.DAOCustumer.inserirClientes(vars(customer)):
             print("Operation OK\n")
 
     def update_customer(self, rg_cliente, nome, sexo, tel):
-
+        connection = dc.DAOCustumer()
+        custumer = Custumer()
         record_to_insert = (rg_cliente, nome, sexo, tel)
-        if dc.DAOCustumer.atualizaCliente(record_to_insert):
-            print("Operation OK\n")
+        custumer.rg_cliente = record_to_insert[0]
+        custumer.nome = record_to_insert[1]
+        custumer.sexo = record_to_insert[2]
+        custumer.tel = record_to_insert[3]
+        connection.atualizaCliente(custumer.rg_cliente, custumer.nome, custumer.sexo, custumer.tel)
 
     def delete_customer(self, rg_cliente):
         customer = Custumer()

@@ -1,6 +1,5 @@
 import psycopg2
 
-
 import spike80.dao.DaoConnection as dc
 
 
@@ -66,65 +65,51 @@ class DAOCustumer:
 
     def inserirClientes(self, rg_cliente, nome, sexo, tel):
         try:
-            self.custumers.rg_cliente = rg_cliente
-            self.custumers.nome = nome
-            self.custumers.sexo = sexo
-            self.custumers.tel = tel
-            cursor = self.connection.cursor()
+            connection = dc.DaoConnection.get_connection()
+            cursor = connection.cursor()
             sql_insert_query = """ insert into public."cliente"("rg","nome",
                                 "sexo","telefone") values (%s,%s,%s,%s)"""
-            record_to_insert = (vars(self.custumers))
+            record_to_insert = (rg_cliente, nome, sexo, tel)
             cursor.execute(sql_insert_query, record_to_insert)
-            self.connection.commit()
+            connection.commit()
             count = cursor.rowcount
             print("Insert OK ", count, "row(s) affected.")
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print(f"Error in insert operation\n", error)
             else:
                 print(f"No connection\n", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print("Connection closed\n")
 
     def atualizaCliente(self, rg_cliente, nome, sexo, tel):
         try:
-            self.custumers.rg_cliente = rg_cliente
-            self.custumers.nome = nome
-            self.custumers.sexo = sexo
-            self.custumers.tel = tel
-            cursor = self.connection.cursor()
+            connection = dc.DaoConnection().get_connection()
 
             sql_update_query = """update public."cliente" set "nome" = %s,
                                   "sexo" = %s, "telefone" = %s where "rg" = %s"""
-            record_to_insert = vars(self.custumers)
-
+            record_to_insert = (rg_cliente, nome, sexo, tel)
+            cursor = connection.cursor()
             cursor.execute(sql_update_query, record_to_insert)
-            self.connection.commit()
+            connection.commit()
             count = cursor.rowcount
             print("Update operation OK", count, "row(s) affected\n")
 
-            sql_select_query = """select * from public."cliente" where 
-                                  "rg" = %s"""
-
-            cursor.execute(sql_select_query, (self.custumers.rg_cliente,))
-            record = cursor.fetchone()
-            print(record)
-
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print(f"Error in update operation\n", error)
             else:
                 print(f"No connection\n", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print(f"Connection closed")
 
     def excluirCliente(self, rg_cliente):

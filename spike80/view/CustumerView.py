@@ -128,8 +128,8 @@ class CustumerView:
 
     def update_custumer(self):
         try:
-            custumers = self.read_fields()
-            self.daocustumer.atualizaCliente(*custumers)
+            record_to_insert = self.read_fields()
+            self.custumer.update_customer(*record_to_insert)
 
             self.treeCustumers.delete(*self.treeCustumers.get_children())
             self.load_init_data()
