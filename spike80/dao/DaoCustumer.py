@@ -65,7 +65,7 @@ class DAOCustumer:
 
     def inserirClientes(self, rg_cliente, nome, sexo, tel):
         try:
-            connection = dc.DaoConnection.get_connection()
+            connection = dc.DaoConnection().get_connection()
             cursor = connection.cursor()
             sql_insert_query = """ insert into public."cliente"("rg","nome",
                                 "sexo","telefone") values (%s,%s,%s,%s)"""
@@ -92,8 +92,8 @@ class DAOCustumer:
             connection = dc.DaoConnection().get_connection()
 
             sql_update_query = """update public."cliente" set "nome" = %s,
-                                  "sexo" = %s, "telefone" = %s where "rg" = %s"""
-            record_to_insert = (rg_cliente, nome, sexo, tel)
+                                  "sexo" = %s, "telefone" = %s where "rg" = %s """
+            record_to_insert = (nome, sexo, tel, rg_cliente)
             cursor = connection.cursor()
             cursor.execute(sql_update_query, record_to_insert)
             connection.commit()

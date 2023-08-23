@@ -115,10 +115,16 @@ class CustumerView:
 
     def register_custumer(self):
         try:
-            custumers = self.read_fields()
-            self.daocustumer.inserirClientes(*custumers)
+            record_to_insert = self.read_fields()
+            customer = Custumer()
+            customer.rg_cliente = record_to_insert[0]
+            customer.nome = record_to_insert[1]
+            customer.sexo = record_to_insert[2]
+            customer.tel = record_to_insert[3]
+            customer.insert_customer(customer.rg_cliente, customer.nome,
+                                     customer.sexo, customer.tel)
 
-            self.treeCustumers.insert('', tk.END, iid=self.iid, values=(list(vars(custumers))))
+            self.treeCustumers.insert('', tk.END, iid=self.iid, values=(list(vars(customer))))
 
             self.iid = self.iid + 1
             self.id = self.id + 1
