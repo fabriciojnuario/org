@@ -105,7 +105,7 @@ class CustumerView:
             id_custumer = int(self.txt_id_custumer.get())
             name_custumer = self.txt_name_custumer.get()
             genre_custumer = self.txt_genre_custumer.get()
-            phone_custumer = self.txt_phone_custumer.get()
+            phone_custumer = int(self.txt_phone_custumer.get())
             print(f"Operation Ok\n")
 
         except:
@@ -116,15 +116,9 @@ class CustumerView:
     def register_custumer(self):
         try:
             record_to_insert = self.read_fields()
-            customer = Custumer()
-            customer.rg_cliente = record_to_insert[0]
-            customer.nome = record_to_insert[1]
-            customer.sexo = record_to_insert[2]
-            customer.tel = record_to_insert[3]
-            customer.insert_customer(customer.rg_cliente, customer.nome,
-                                     customer.sexo, customer.tel)
+            self.custumer.insert_customer(*record_to_insert)
 
-            self.treeCustumers.insert('', tk.END, iid=self.iid, values=(list(vars(customer))))
+            self.treeCustumers.insert('', tk.END, iid=self.iid, values=record_to_insert)
 
             self.iid = self.iid + 1
             self.id = self.id + 1

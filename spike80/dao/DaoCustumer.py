@@ -38,30 +38,27 @@ class DAOCustumer:
 
     def selecionaCliente(self, rg_cliente):
         try:
-            cursor = self.connection.cursor()
+            connection = dc.DaoConnection().get_connection()
+            cursor = connection.cursor()
             sql_select_query = """ select * from public."cliente" where "rg" = %s """
             cursor.execute(sql_select_query, (rg_cliente,))
             registry = cursor.fetchone()
-            self.custumers.rg_cliente = registry[0]
-            self.custumers.nome = registry[1]
-            self.custumers.sexo = registry[2]
-            self.custumers.tel = registry[3]
 
-            print(str(self.custumers))
+            print(str(registry))
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
-                print(f"No one register to return\n", error)
+            if connection:
+                print(f"No one register to return.\n", error)
             else:
-                print(f"No database connection\n", error)
+                print(f"No database connection.\n", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print(f"Connection closed\n")
 
-        return self.custumers
+        return registry
 
     def inserirClientes(self, rg_cliente, nome, sexo, tel):
         try:

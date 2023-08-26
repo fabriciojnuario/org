@@ -22,8 +22,8 @@ class Custumer:
 
         return custumers
 
-    def get_custumer(self):
-        register = dc.DAOCustumer.selecionaCliente()
+    def get_custumer(self, rg_cliente):
+        register = dc.DAOCustumer.selecionaCliente(rg_cliente)
         customer = Custumer()
         customer.rg_cliente = register[0]
         customer.nome = register[1]
@@ -46,12 +46,12 @@ class Custumer:
     def update_customer(self, rg_cliente, nome, sexo, tel):
         connection = dc.DAOCustumer()
         custumer = Custumer()
-        record_to_insert = (rg_cliente, nome, sexo, tel)
-        custumer.rg_cliente = record_to_insert[0]
-        custumer.nome = record_to_insert[1]
-        custumer.sexo = record_to_insert[2]
-        custumer.tel = record_to_insert[3]
-        connection.atualizaCliente(custumer.rg_cliente, custumer.nome, custumer.sexo, custumer.tel)
+        custumer.rg_cliente = rg_cliente
+        custumer.nome = nome
+        custumer.sexo = sexo
+        custumer.tel = tel
+        connection.atualizaCliente(custumer.rg_cliente, custumer.nome, custumer.sexo,
+                                   custumer.tel)
 
     def delete_customer(self, rg_cliente):
         customer = Custumer()
