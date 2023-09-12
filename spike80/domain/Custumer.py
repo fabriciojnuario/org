@@ -60,6 +60,5 @@ class Custumer:
         connection = dc.DAOCustumer()
         connection.excluirCliente(id__)
 
-
-
-
+    def __str__(self):
+        return f"{self.rg_cliente}{self.nome}"
