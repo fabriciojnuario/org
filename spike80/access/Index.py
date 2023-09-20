@@ -3,10 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import spike80.view.RouterView as rv
-
-
-def login_pass():
-    rv.RouterView()
+import spike80.dao.DaoConnection as dc
 
 
 class Login:
@@ -17,8 +14,9 @@ class Login:
         self.right_frame = tk.Frame(root, width=399, height=300, bg="MIDNIGHTBLUE", relief="raised")
         self.right_frame.pack(side=RIGHT)
 
-        # self.logo_label = tk.Label(left_frame, image=logo, bg="MIDNIGHTBLUE")
-        # self.logo_label.place(x=50, y=100)
+        #self.logo = PhotoImage(file="/resource/3_asdafass_123.ico")
+        #self.logo_label = tk.Label(self.left_frame, image=self.logo, bg="MIDNIGHTBLUE")
+        #self.logo_label.place(x=50, y=100)
 
         self.user_label = tk.Label(self.right_frame, text="username:", font=("Century Gothic", 10),
                                    bg="MIDNIGHTBLUE", fg="white")
@@ -37,16 +35,29 @@ class Login:
         self.text = tk.StringVar()
         self.text.set("login")
 
-        self.btn_login = ttk.Button(self.right_frame, text="login", width=20,command=login_pass)
+        self.btn_login = ttk.Button(self.right_frame, text="login",
+                                    width=20, command=self.access_validator)
         self.btn_login.place(x=10, y=200)
 
         self.btn_register = ttk.Button(self.right_frame, text="register", width=20, command=None)
         self.btn_register.place(x=220, y=200)
 
+    def access_validator(self):
+        name = self.user_entry.get()
+        psw = self.psw_entry.get()
+        try:
+            if dc.DaoConnection.get_connection(name, psw):
+                rv.RouterView()
+        except:
+            messagebox.showinfo('Error', 'No connection to system.')
+        finally:
+            self.user_entry.delete(0, tk.END)
+            self.psw_entry.delete(0, tk.END)
+
 
 root = tk.Tk()
 Login(root)
-root.title('Paradase Hotel AccessPanel')
+root.title('Paradise Hotel AccessPanel')
 
 window_width = 600
 window_height = 300
