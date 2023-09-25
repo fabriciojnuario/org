@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-import spike80.view.RouterView as rv
+import spike80.access.IndexRouter as rv
 import spike80.dao.DaoConnection as dc
 
 
@@ -49,7 +49,7 @@ class Login:
             if dc.DaoConnection.get_connection(name, psw):
                 rv.RouterView()
         except:
-            messagebox.showinfo('Error', 'No connection to system.')
+            messagebox.showinfo('Error', 'No permission')
         finally:
             self.user_entry.delete(0, tk.END)
             self.psw_entry.delete(0, tk.END)
@@ -57,7 +57,7 @@ class Login:
 
 root = tk.Tk()
 Login(root)
-root.title('Paradise Hotel AccessPanel')
+root.title('Paradise Hotel __  AccessPanel')
 
 window_width = 600
 window_height = 300

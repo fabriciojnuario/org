@@ -8,7 +8,9 @@ class DAOCustumer:
         print("Contructor function\n")
 
     def listaClientes(self):
-        connection = dc.DaoConnection().get_connection()
+        name = "fjnuario"
+        psw = "96875296"
+        connection = dc.DaoConnection().get_connection(name, psw)
         custumers = []
         try:
             cursor = connection.cursor()

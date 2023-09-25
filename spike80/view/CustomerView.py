@@ -4,35 +4,35 @@ from tkinter import ttk
 from spike80.domain.Custumer import Custumer
 
 
-class CustomerView(tk.Frame):
+class CustomerView:
 
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+    def __init__(self):
+        self.win = tk.Toplevel(bg='MIDNIGHTBLUE', width=1000, height=800, relief="raised")
         self.customer = Custumer()
 
-        self.lb_id_customer = tk.Label(parent, text='Id Custumer:')
-        self.lb_name_customer = tk.Label(parent, text='Name: ')
-        self.lb_genre_customer = tk.Label(parent, text='Genre: ')
-        self.lb_phone_customer = tk.Label(parent, text='phone: ')
+        self.lb_id_customer = tk.Label(self.win, text='Id Custumer:')
+        self.lb_name_customer = tk.Label(self.win, text='Name: ')
+        self.lb_genre_customer = tk.Label(self.win, text='Genre: ')
+        self.lb_phone_customer = tk.Label(self.win, text='phone: ')
 
-        self.txt_id_customer = tk.Entry()
-        self.txt_name_customer = tk.Entry()
-        self.txt_genre_customer = tk.Entry()
-        self.txt_phone_customer = tk.Entry()
+        self.txt_id_customer = tk.Entry(self.win)
+        self.txt_name_customer = tk.Entry(self.win)
+        self.txt_genre_customer = tk.Entry(self.win)
+        self.txt_phone_customer = tk.Entry(self.win)
 
-        self.btnRegister = tk.Button(parent, text='register',
+        self.btnRegister = tk.Button(self.win, text='register',
                                      command=self.register_customer)
-        self.btnUpdate = tk.Button(parent, text='update',
+        self.btnUpdate = tk.Button(self.win, text='update',
                                    command=self.update_customer)
-        self.btnDelete = tk.Button(parent, text='delete',
+        self.btnDelete = tk.Button(self.win, text='delete',
                                    command=self.delete_customer)
-        self.btnClear = tk.Button(parent, text='delete',
+        self.btnClear = tk.Button(self.win, text='delete',
                                   command=self.clear_fields)
 
         self.dataColumns = ('Rg cliente', 'Nome', 'sexo', 'tel')
-        self.treeCustomers = ttk.Treeview(parent, columns=self.dataColumns,
+        self.treeCustomers = ttk.Treeview(self.win, columns=self.dataColumns,
                                           selectmode='browse', show='headings')
-        self.verscrlbar = ttk.Scrollbar(parent, orient='vertical', command=self.treeCustomers.yview)
+        self.verscrlbar = ttk.Scrollbar(self.win, orient='vertical', command=self.treeCustomers.yview)
         self.verscrlbar.pack(side='right', fill='x')
         self.treeCustomers.configure(yscrollcommand=self.verscrlbar.set)
 
