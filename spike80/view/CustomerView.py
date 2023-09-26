@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
-
+import spike80.view.IndexRouter as ir
 from spike80.domain.Custumer import Custumer
 
 
 class CustomerView:
 
     def __init__(self):
-        self.win = tk.Toplevel(bg='MIDNIGHTBLUE', width=1000, height=800, relief="raised")
+        self.win = tk.Toplevel(width=600, height=600, relief="raised")
         self.customer = Custumer()
 
         self.lb_id_customer = tk.Label(self.win, text='Id Custumer:')
@@ -26,8 +26,11 @@ class CustomerView:
                                    command=self.update_customer)
         self.btnDelete = tk.Button(self.win, text='delete',
                                    command=self.delete_customer)
-        self.btnClear = tk.Button(self.win, text='delete',
+        self.btnClear = tk.Button(self.win, text='clear',
                                   command=self.clear_fields)
+        self.btn_query = tk.Button(self.win, text='search',
+                                   command=None)
+        self.btn_back = tk.Button(self.win, text="voltar", command=self.back_view)
 
         self.dataColumns = ('Rg cliente', 'Nome', 'sexo', 'tel')
         self.treeCustomers = ttk.Treeview(self.win, columns=self.dataColumns,
@@ -62,13 +65,15 @@ class CustomerView:
         self.lb_phone_customer.place(x=100, y=125)
         self.txt_phone_customer.place(x=250, y=125)
 
-        self.btnRegister.place(x=100, y=150)
-        self.btnUpdate.place(x=200, y=150)
-        self.btnDelete.place(x=300, y=150)
-        self.btnClear.place(x=400, y=150)
+        self.btnRegister.place(x=100, y=160)
+        self.btnUpdate.place(x=180, y=160)
+        self.btnDelete.place(x=255, y=160)
+        self.btnClear.place(x=325, y=160)
+        self.btn_query.place(x=450, y=160)
+        self.btn_back.place(x=450, y=480)
 
         self.treeCustomers.place(x=100, y=200)
-        self.verscrlbar.place(x=605, y=200, height=225)
+        self.verscrlbar.place(x=505, y=200, height=225)
         self.load_init_data()
 
     def load_init_data(self):
@@ -158,6 +163,14 @@ class CustomerView:
             self.txt_phone_customer.delete(0, tk.END)
         except:
             print(f'No data to clear\n')
+
+    def back_view(self):
+        ir.RouterView().win.deiconify()
+        self.win.withdraw()
+
+
+
+
 
 # root = tk.Tk()
 # CustumerView(None)

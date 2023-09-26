@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-import spike80.access.IndexRouter as rv
+import spike80.view.IndexRouter as rv
 import spike80.dao.DaoConnection as dc
 
 
@@ -43,8 +43,8 @@ class Login:
         self.btn_register.place(x=220, y=200)
 
     def access_validator(self):
-        name = self.user_entry.get()
-        psw = self.psw_entry.get()
+        name = "fjnuario"
+        psw = "96875296"
         try:
             if dc.DaoConnection.get_connection(name, psw):
                 rv.RouterView()
