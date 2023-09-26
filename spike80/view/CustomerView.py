@@ -4,6 +4,7 @@ import spike80.view.IndexRouter as ir
 from spike80.domain.Custumer import Custumer
 
 
+
 class CustomerView:
 
     def __init__(self):

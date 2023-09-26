@@ -1,16 +1,14 @@
 import psycopg2
 
 import spike80.dao.DaoConnection as dc
-
+import spike80.resource.Access as ac
 
 class DAOCustumer:
     def __int__(self):
         print("Contructor function\n")
 
     def listaClientes(self):
-        name = "fjnuario"
-        psw = "96875296"
-        connection = dc.DaoConnection().get_connection(name, psw)
+        connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
         custumers = []
         try:
             cursor = connection.cursor()

@@ -4,9 +4,11 @@ from tkinter import ttk
 from tkinter import messagebox
 import spike80.view.IndexRouter as rv
 import spike80.dao.DaoConnection as dc
+import spike80.resource.Access as ac
 
 
 class Login:
+
     def __init__(self, win):
         self.left_frame = tk.Frame(root, width=200, height=300, bg="MIDNIGHTBLUE", relief="raised")
         self.left_frame.pack(side=LEFT)
@@ -14,9 +16,9 @@ class Login:
         self.right_frame = tk.Frame(root, width=399, height=300, bg="MIDNIGHTBLUE", relief="raised")
         self.right_frame.pack(side=RIGHT)
 
-        #self.logo = PhotoImage(file="/resource/3_asdafass_123.ico")
-        #self.logo_label = tk.Label(self.left_frame, image=self.logo, bg="MIDNIGHTBLUE")
-        #self.logo_label.place(x=50, y=100)
+        # self.logo = PhotoImage(file="/resource/3_asdafass_123.ico")
+        # self.logo_label = tk.Label(self.left_frame, image=self.logo, bg="MIDNIGHTBLUE")
+        # self.logo_label.place(x=50, y=100)
 
         self.user_label = tk.Label(self.right_frame, text="username:", font=("Century Gothic", 10),
                                    bg="MIDNIGHTBLUE", fg="white")
@@ -43,8 +45,8 @@ class Login:
         self.btn_register.place(x=220, y=200)
 
     def access_validator(self):
-        name = "fjnuario"
-        psw = "96875296"
+        name = ac.name
+        psw = ac.psw
         try:
             if dc.DaoConnection.get_connection(name, psw):
                 rv.RouterView()
