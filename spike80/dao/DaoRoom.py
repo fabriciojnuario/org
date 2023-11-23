@@ -1,44 +1,43 @@
 import psycopg2
-from DaoConnection import DaoConnection
-from spike80.domain.Room import Room
+import spike80.dao.DaoConnection as dc
+import spike80.resource.Access as ac
 
 
 class DaoRoom:
-    def __int__(self, num_quarto, andar, id_tipo, status):
-        self.connection = DaoConnection()
-        self.room = Room()
+    def __int__(self):
+        print("Constructor function\n")
 
     def listaQuartos(self):
+        connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
+        rooms = []
         try:
-            cursor = self.connection.cursor()
+            cursor = connection.cursor()
 
             print("Selecionando todos os quartos")
             sql_select_query = """ select * from public."quartos" """
 
             cursor.execute(sql_select_query)
             registers = cursor.fetchall()
-            for register in registers:
-                self.room.nroom = register[0]
-                self.room.floor = register[1]
-                self.room.troom = register[2]
-                self.room.status = register[3]
+            for i in range(len(registers)):
+                room = registers[i]
+                rooms.append(room)
 
             print(registers)
-            print(repr(self.room))
+            print(rooms)
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print(f"No data.\n", error)
             else:
                 print(f"Error on connection\n", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print(f"Connection closed\n")
 
-        return self.room
+        return rooms
 
     def selecionaQuarto(self, num_quarto):
         try:

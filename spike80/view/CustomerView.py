@@ -4,7 +4,6 @@ import spike80.view.IndexRouter as ir
 from spike80.domain.Custumer import Custumer
 
 
-
 class CustomerView:
 
     def __init__(self):
@@ -40,15 +39,15 @@ class CustomerView:
         self.verscrlbar.pack(side='right', fill='x')
         self.treeCustomers.configure(yscrollcommand=self.verscrlbar.set)
 
-        self.treeCustomers.heading('Rg cliente', text='id_customer')
-        self.treeCustomers.heading('Nome', text='name')
-        self.treeCustomers.heading('sexo', text='genre')
-        self.treeCustomers.heading('tel', text='phone')
+        self.treeCustomers.heading(0, text='rg cliente')
+        self.treeCustomers.heading(1, text='nome')
+        self.treeCustomers.heading(2, text='sexo')
+        self.treeCustomers.heading(3, text='tel')
 
-        self.treeCustomers.column('Rg cliente', minwidth=0, width=100)
-        self.treeCustomers.column('Nome', minwidth=0, width=100)
-        self.treeCustomers.column('sexo', minwidth=0, width=100)
-        self.treeCustomers.column('tel', minwidth=0, width=100)
+        self.treeCustomers.column(0, minwidth=0, width=100)
+        self.treeCustomers.column(1, minwidth=0, width=100)
+        self.treeCustomers.column(2, minwidth=0, width=100)
+        self.treeCustomers.column(3, minwidth=0, width=100)
 
         self.treeCustomers.pack(padx=10, pady=10)
 
@@ -168,10 +167,6 @@ class CustomerView:
     def back_view(self):
         ir.RouterView().win.deiconify()
         self.win.withdraw()
-
-
-
-
 
 # root = tk.Tk()
 # CustumerView(None)

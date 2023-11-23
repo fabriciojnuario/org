@@ -38,7 +38,7 @@ class DAOCustumer:
 
     def selecionaCliente(self, rg_cliente):
         try:
-            connection = dc.DaoConnection().get_connection()
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
             sql_select_query = """ select * from public."cliente" where "rg" = %s """
             cursor.execute(sql_select_query, (rg_cliente,))
@@ -62,7 +62,7 @@ class DAOCustumer:
 
     def inserirClientes(self, rg_cliente, nome, sexo, tel):
         try:
-            connection = dc.DaoConnection().get_connection()
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
             sql_insert_query = """ insert into public."cliente"("rg","nome",
                                 "sexo","telefone") values (%s,%s,%s,%s)"""
@@ -86,7 +86,7 @@ class DAOCustumer:
 
     def atualizaCliente(self, rg_cliente, nome, sexo, tel):
         try:
-            connection = dc.DaoConnection().get_connection()
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
 
             sql_update_query = """update public."cliente" set "nome" = %s,
                                   "sexo" = %s, "telefone" = %s where "rg" = %s """
@@ -111,7 +111,7 @@ class DAOCustumer:
 
     def excluirCliente(self, rg_cliente):
         try:
-            connection = dc.DaoConnection().get_connection()
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
             sql_delete_query = """delete from public."cliente" where
                                   "rg" = %s"""
