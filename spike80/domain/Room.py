@@ -68,3 +68,6 @@ class Room:
         room = Room()
         room.nroom = num_quarto
         connection.excluirQuarto(room.nroom)
+
+    def __str__(self):
+        return f"f{self.nroom, self.floor, self.troom, self.status}"

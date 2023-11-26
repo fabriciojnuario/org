@@ -14,7 +14,7 @@ class DaoRoom:
             cursor = connection.cursor()
 
             print("Selecionando todos os quartos")
-            sql_select_query = """ select * from public."quartos" """
+            sql_select_query = """ select * from public."quarto" """
 
             cursor.execute(sql_select_query)
             registers = cursor.fetchall()

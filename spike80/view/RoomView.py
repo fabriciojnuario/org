@@ -25,7 +25,7 @@ class RoomView:
         self.btnDelete = tk.Button(self.win, text='delete',
                                    command=None)
         self.btnClear = tk.Button(self.win, text='clear',
-                                  command=None)
+                                  command=self.clear_fields)
         self.btn_query = tk.Button(self.win, text='search',
                                    command=None)
         self.btn_back = tk.Button(self.win, text="voltar", command=None)
@@ -49,7 +49,7 @@ class RoomView:
 
         self.treeRooms.pack(padx=10, pady=10)
 
-        self.treeRooms.bind('<<TreeviewSelect>>')
+        self.treeRooms.bind('<<TreeviewSelect>>', self.show_data_selected)
 
         self.lb_id_room.place(x=100, y=50)
         self.txt_id_room.place(x=250, y=50)
@@ -72,3 +72,33 @@ class RoomView:
 
         self.treeRooms.place(x=100, y=200)
         self.verscrlbar.place(x=505, y=200, height=225)
+
+        self.load_init_data()
+
+    def load_init_data(self):
+        self.id = 0
+        self.iid = 0
+        register = self.room.get_all_rooms()
+        for i in range(len(register)):
+            room = register[i]
+            self.treeRooms.insert('', tk.END, iid=self.iid,
+                                  values=(room.nroom, room.floor, room.troom, room.status))
+            self.id = self.id + 1
+            self.iid = self.iid + 1
+        print("No data to show.\n")
+
+    def show_data_selected(self, event):
+        self.clear_fields()
+        for selection in self.treeRooms.selection():
+            item = self.treeRooms.item(selection)
+            nroom, floor, troom, status = item['values'][0:4]
+            self.txt_id_room.insert(0, nroom)
+            self.txt_floor.insert(0, floor)
+            self.txt_idtype.insert(0, troom)
+            self.txt_status.insert(0, status)
+
+    def clear_fields(self):
+        self.txt_id_room.delete(0, tk.END)
+        self.txt_floor.delete(0, tk.END)
+        self.txt_idtype.delete(0, tk.END)
+        self.txt_status.delete(0, tk.END)
