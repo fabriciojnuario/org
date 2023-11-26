@@ -67,7 +67,7 @@ class DaoRoom:
     def inserirQuarto(self, num_quarto, andar, tipo_quarto, status):
 
         try:
-            connection = dc.DaoConnection().get_connection(ac.name.ac.psw)
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
             sql_insert_query = """ insert into public."quarto"("num_quarto","andar",
                                 "id_tipo","status") values (%s,%s,%s,%s)"""

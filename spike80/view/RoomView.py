@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from spike80.domain.Room import Room
+import spike80.view.IndexRouter as ir
 
 
 class RoomView:
@@ -19,16 +20,16 @@ class RoomView:
         self.txt_status = tk.Entry(self.win)
 
         self.btnRegister = tk.Button(self.win, text='register',
-                                     command=None)
+                                     command=self.register_room)
         self.btnUpdate = tk.Button(self.win, text='update',
-                                   command=None)
+                                   command=self.update_room)
         self.btnDelete = tk.Button(self.win, text='delete',
                                    command=None)
         self.btnClear = tk.Button(self.win, text='clear',
                                   command=self.clear_fields)
         self.btn_query = tk.Button(self.win, text='search',
                                    command=None)
-        self.btn_back = tk.Button(self.win, text="voltar", command=None)
+        self.btn_back = tk.Button(self.win, text="voltar", command=self.back_view)
 
         self.dataColumns = ('Nº quarto', 'Andar', 'tipo', 'status')
         self.treeRooms = ttk.Treeview(self.win, columns=self.dataColumns,
@@ -97,8 +98,52 @@ class RoomView:
             self.txt_idtype.insert(0, troom)
             self.txt_status.insert(0, status)
 
+    def read_fields(self):
+        try:
+            nroom = int(self.txt_id_room.get())
+            floor = int(self.txt_floor.get())
+            troom = int(self.txt_idtype.get())
+            status = self.txt_status.get()
+            print('Operation Ok.\n')
+        except:
+            print('No data to read')
+
+        return nroom, floor, troom, status
+
     def clear_fields(self):
         self.txt_id_room.delete(0, tk.END)
         self.txt_floor.delete(0, tk.END)
         self.txt_idtype.delete(0, tk.END)
         self.txt_status.delete(0, tk.END)
+
+    def register_room(self):
+        try:
+            record_to_insert = self.read_fields()
+            self.room.insert_room(*record_to_insert)
+            self.treeRooms.insert('', tk.END, iid=self.iid, values=record_to_insert)
+            self.iid = self.iid + 1
+            self.id =self.id +1
+            print("Operation committed.\n")
+
+        except:
+            print("Operation no committed\n")
+
+    def update_room(self):
+        try:
+            record_to_insert = self.read_fields()
+            self.room.update_room(*record_to_insert)
+            self.treeRooms.delete(*self.treeRooms.get_children())
+            self.load_init_data()
+            self.clear_fields()
+
+            print('Operation committed\n')
+
+        except:
+            print('Operation no comitted\n')
+
+
+
+
+    def back_view(self):
+        ir.RouterView().win.deiconify()
+        self.win.withdraw()
