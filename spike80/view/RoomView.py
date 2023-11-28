@@ -86,7 +86,7 @@ class RoomView:
                                   values=(room.nroom, room.floor, room.troom, room.status))
             self.id = self.id + 1
             self.iid = self.iid + 1
-        print("No data to show.\n")
+        print("Data loaded sucessfull.\n")
 
     def show_data_selected(self, event):
         self.clear_fields()
@@ -120,7 +120,7 @@ class RoomView:
         try:
             record_to_insert = self.read_fields()
             self.room.insert_room(*record_to_insert)
-            self.treeRooms.insert('', tk.END, iid=self.iid, values=record_to_insert)
+            self.treeRooms.insert('', tk.END, values=record_to_insert)
             self.iid = self.iid + 1
             self.id =self.id +1
             print("Operation committed.\n")

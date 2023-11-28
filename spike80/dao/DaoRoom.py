@@ -25,9 +25,9 @@ class DaoRoom:
             print(registers)
             print(rooms)
 
-        except(Exception, psycopg2.Error) as error:
+        except (Exception, psycopg2.Error) as error:
             if connection:
-                print(f"No data.\n", error)
+                print(f"No data to show.\n", error)
             else:
                 print(f"Error on connection\n", error)
 
@@ -86,7 +86,7 @@ class DaoRoom:
         finally:
             if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print("Connection closed.")
 
     def atualizaQuarto(self, num_quarto, andar, tipo_quarto, status):
