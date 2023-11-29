@@ -93,8 +93,7 @@ class DaoRoom:
         try:
             connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
-            sql_update_query = """update public."quarto" set "andar" = %s,
-                                  "id_tipo" = %s, "status" = %s where "num_quarto" = %s"""
+            sql_update_query = """update public."quarto" set "andar" = %s,"id_tipo" = %s,  "status" = %s where "num_quarto" = %s"""
             record_to_insert = (andar, tipo_quarto, status, num_quarto)
             cursor.execute(sql_update_query, record_to_insert)
             connection.commit()
@@ -117,10 +116,9 @@ class DaoRoom:
         try:
             connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
-            sql_delete_query = """delete from public."quarto" where
-                                  "num_quarto" = %s;"""
+            sql_delete_query = """delete from public."quarto" where "num_quarto" = %s"""
 
-            cursor.execute(sql_delete_query, num_quarto)
+            cursor.execute(sql_delete_query, (num_quarto,))
             connection.commit()
             count = cursor.rowcount
             print("Delete operation OK", count, "row(s) affected\n")

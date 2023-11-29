@@ -61,7 +61,7 @@ class Room:
         room.floor = andar
         room.troom = tipo_quarto
         room.status = status
-        connection.atualizaQuarto(room.floor, room.troom, room.status, room.nroom)
+        connection.atualizaQuarto(room.nroom, room.floor, room.troom, room.status)
 
     def delete_room(self, num_quarto):
         connection = dr.DaoRoom()

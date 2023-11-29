@@ -24,7 +24,7 @@ class RoomView:
         self.btnUpdate = tk.Button(self.win, text='update',
                                    command=self.update_room)
         self.btnDelete = tk.Button(self.win, text='delete',
-                                   command=None)
+                                   command=self.delete_room)
         self.btnClear = tk.Button(self.win, text='clear',
                                   command=self.clear_fields)
         self.btn_query = tk.Button(self.win, text='search',
@@ -122,7 +122,7 @@ class RoomView:
             self.room.insert_room(*record_to_insert)
             self.treeRooms.insert('', tk.END, values=record_to_insert)
             self.iid = self.iid + 1
-            self.id =self.id +1
+            self.id = self.id + 1
             print("Operation committed.\n")
 
         except:
@@ -141,8 +141,12 @@ class RoomView:
         except:
             print('Operation no comitted\n')
 
-
-
+    def delete_room(self):
+        rooms = self.read_fields()
+        self.room.delete_room(rooms[0])
+        self.treeRooms.delete(*self.treeRooms.get_children())
+        self.load_init_data()
+        self.clear_fields()
 
     def back_view(self):
         ir.RouterView().win.deiconify()
