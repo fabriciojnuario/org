@@ -1,82 +1,74 @@
 import psycopg2
-from DaoConnection import DaoConnection
-from spike80.domain.Service import Service
+import spike80.dao.DaoConnection as dc
+import spike80.resource.Access as ac
 
 
 class DaoJob:
 
     def __int__(self):
-        self.connection = DaoConnection()
-        self.service = Service()
+        print('Construct method')
 
     def listaAtendimento(self):
+        services = []
         try:
-            cursor = self.connection.cursor()
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
+            cursor = connection.cursor()
             sql_select_query = """ select * from public."atendimento; """
             cursor.execute(sql_select_query)
             registers = cursor.fetchall()
-            for registry in registers:
-                self.service.id_job = registry[0]
-                self.service.id_service = registry[1]
-                self.service.id_hostage = registry[2]
-            print(repr(registers))
+            for i in range(len(registers)):
+                service = registers[i]
+                services.append(service)
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
-                print(f"No data.", error)
+            if connection:
+                print(f"No data to show.", error)
             else:
                 print(f"Error in select operation")
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
-                print(f"Connection closed.")
+                connection.close()
+                print("Connection closed.")
 
-        return self.service
+        return services
 
     def selecionaAtendimento(self, id_atendimento):
         try:
-            cursor = self.connection.cursor()
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
+            cursor = connection.cursor()
             sql_select_query = """ select * from public."atendimento"
                                     where "id_atendimento" = %s"""
             cursor.execute = (sql_select_query, (id_atendimento,))
             registry = cursor.fetchone()
-            self.service.id_job = registry[0]
-            self.service.id_service = registry[1]
-            self.service.id_hostage = registry[2]
-
-            print(str(self.service))
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print(f"Error in select operation.\n")
             else:
                 print(f"No connection.\n")
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
-                print(f"Connection closed\n")
+                connection.close()
+                print("Connection closed\n")
 
-        return self.service
-
+        return registry
 
     def atualizaAtendimento(self, id_atendimento, id_servico, id_hospedagem):
         try:
-            self.service.id_job = id_atendimento
-            self.service.id_service = id_servico
-            self.service.id_hostage = id_hospedagem
-            cursor = self.connection.cursor()
-            record_to_insert = (vars(self.service))
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
+            cursor = connection.cursor()
+            record_to_insert = id_servico, id_hospedagem, id_atendimento
             sql_update_query = """ update public."atendimento" set "id_servico" = %s,
                                 "id_hospedagem" = %s where "id_atendimento" = %s """
 
             cursor.execute(sql_update_query, record_to_insert)
-            self.connection.commit()
+            connection.commit()
             count = cursor.rowcount
-            print(f"Update operation successfully\n", count,
+            print("Update operation successfully\n", count,
                   "row(s) affected\n")
 
         except(Exception, psycopg2.Error) as error:

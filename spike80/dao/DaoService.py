@@ -8,7 +8,6 @@ class DaoService:
         print('Constructor method')
 
     def listaServico(self):
-
         jobs = []
         try:
             connection = dc.DaoConnection().get_connection(ac.name, ac.psw)

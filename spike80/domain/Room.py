@@ -1,5 +1,6 @@
 import spike80.dao.DaoRoom as dr
 
+
 class Room:
 
     def __int__(self, nroom, floor, troom, status):
