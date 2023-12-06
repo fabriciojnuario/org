@@ -86,7 +86,7 @@ class RoomView:
                                   values=(room.nroom, room.floor, room.troom, room.status))
             self.id = self.id + 1
             self.iid = self.iid + 1
-        print("Data loaded sucessfull.\n")
+        print("Data loaded successfully.\n")
 
     def show_data_selected(self, event):
         self.clear_fields()

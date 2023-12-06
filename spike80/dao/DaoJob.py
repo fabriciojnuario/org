@@ -72,59 +72,57 @@ class DaoJob:
                   "row(s) affected\n")
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print(f"Error in update operator", error)
             else:
                 print(f"No connection", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
-                print(f"Connection closed.")
+                connection.close()
+                print("Connection closed.")
 
     def realizaAtendimento(self, id_hospedagem, id_servico):
         try:
-            self.service.id_job = 'default'
-            self.service.id_hostage = id_hospedagem
-            self.service.id_service = id_servico
-            cursor = self.connection.cursor()
-            record_to_insert = (self.service.id_hostage, self.service.id_service)
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
+            cursor = connection.cursor()
+            record_to_insert = (id_hospedagem, id_servico)
             cursor.callproc("realizapedido", record_to_insert)
-            self.connection.commit()
+            connection.commit()
             count = cursor.rowcount
             print(count, f"Atendimento registrado.")
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print(f"Error in update operation", error)
             else:
                 print(f"No connection", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print(f"Connection closed.")
 
     def excluiAtendimento(self, id_atendimento):
         try:
-            self.service.id_job = id_atendimento
-            cursor = self.connection.cursor()
+            connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
+            cursor = connection.cursor()
             sql_delete_query = """ delete from public."atendimento" where 
                                     "id_atendimento" = %s; """
-            cursor.execute(sql_delete_query, (self.service.id_job,))
-            self.connection.commit()
-            print(f"O registro foi excluido com sucesso")
+            cursor.execute(sql_delete_query, (id_atendimento,))
+            connection.commit()
+            print("O registro foi excluido com sucesso")
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
-                print(f"Error in delete operation", error)
+            if connection:
+                print("Error in delete operation", error)
             else:
-                print(f"No connection", error)
+                print("No connection", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print(f"Connection closed.")

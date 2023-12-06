@@ -29,7 +29,7 @@ class Job:
 
         return jobs
 
-    def get_a_job(self, id_job):
+    def get_job(self, id_job):
         connection = ds.DaoService()
         registry = connection.selecionaServico(id_job)
         job = Job()
@@ -54,7 +54,7 @@ class Job:
         job.id_job = record_to_insert[0]
         job.description = record_to_insert[1]
         job.price = record_to_insert[2]
-        ds.DaoService.atualizaServico(job.id_job, job.description, job.price)
+        ds.DaoService.inserirServico(job.id_job, job.description, job.price)
 
     def delete_job(self, id_job):
         connection = ds.DaoService()
