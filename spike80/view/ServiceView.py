@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from spike80.domain.Job import Job
-import spike80.view.IndexRouter as id
+import spike80.view.IndexRouter as ir
 
 
 class ServiceView(tk.Frame):
@@ -22,7 +22,7 @@ class ServiceView(tk.Frame):
         self.btn_delete = tk.Button(self.win, text='Excluir', command=None)
         self.btn_clear = tk.Button(self.win, text='Limpar', command=None)
         self.btn_query = tk.Button(self.win, text='Procurar', command=None)
-        self.btn_back = tk.Button(self.win, text='Voltar', command=None)
+        self.btn_back = tk.Button(self.win, text='Voltar', command=self.back_view)
 
         self.data_columms = ('id serviço', 'descrição', 'valor')
         self.tree_jobs = ttk.Treeview(self.win, columns=self.data_columms,
@@ -75,13 +75,15 @@ class ServiceView(tk.Frame):
 
         print('Data loaded successfully.\n')
 
-
-
     def show_data_selected(self):
         self.clear_fields()
 
-
     def clear_fields(self):
-        pass
+        self.txt_id_job.delete(0, tk.END)
+        self.txt_description.delete(0, tk.END)
+        self.txt_price.delete(0, tk.END)
 
+    def back_view(self):
+        ir.RouterView().win.deiconify()
+        self.win.wm_withdraw()
 

@@ -2,6 +2,7 @@ import tkinter
 import tkinter as tk
 import spike80.view.CustomerView as cv
 import spike80.view.RoomView as rv
+import spike80.view.ServiceView as sv
 
 
 class RouterView:
@@ -25,7 +26,7 @@ class RouterView:
 
         label_sv = tk.Label(frame_control, text="Acessar Serviço:")
         label_sv.place(x=230, y=120)
-        btn_sv = tk.Button(frame_control, text="ir", command=None, width=8)
+        btn_sv = tk.Button(frame_control, text="ir", command=self.access_sv , width=8)
         btn_sv.place(x=230, y=143)
 
         label_av = tk.Label(frame_control, text="Acessar atendimento:")
@@ -54,4 +55,8 @@ class RouterView:
 
     def access_rv(self):
         rv.RoomView()
+        self.win.withdraw()
+
+    def access_sv(self):
+        sv.ServiceView()
         self.win.withdraw()
