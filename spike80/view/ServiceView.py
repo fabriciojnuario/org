@@ -18,10 +18,10 @@ class ServiceView(tk.Frame):
         self.txt_description = tk.Entry(self.win)
         self.txt_price = tk.Entry(self.win)
 
-        self.btn_register = tk.Button(self.win, text='Cadastrar', command=None)
+        self.btn_register = tk.Button(self.win, text='Cadastrar', command=self.register_job)
         self.btn_update = tk.Button(self.win, text='Atualizar', command=None)
         self.btn_delete = tk.Button(self.win, text='Excluir', command=None)
-        self.btn_clear = tk.Button(self.win, text='Limpar', command=None)
+        self.btn_clear = tk.Button(self.win, text='Limpar', command=self.clear_fields())
         self.btn_query = tk.Button(self.win, text='Procurar', command=None)
         self.btn_back = tk.Button(self.win, text='Voltar', command=self.back_view)
 
@@ -42,7 +42,7 @@ class ServiceView(tk.Frame):
 
         self.tree_jobs.pack(padx=10, pady=10)
 
-        self.tree_jobs.bind('<<TreeviewSelected>>', self.show_data_selected)
+        self.tree_jobs.bind('<<TreeviewSelect>>', self.show_data_selected)
 
         self.lb_id_job.place(x=100, y=50)
         self.txt_id_job.place(x=250, y=50)
@@ -80,18 +80,43 @@ class ServiceView(tk.Frame):
         self.clear_fields()
         for selection in self.tree_jobs.selection():
             item = self.tree_jobs.item(selection)
-            id_job, description, price = item['values'][0:2]
+            id_job, description, price = item['values'][0:3]
             self.txt_id_job.insert(0, id_job)
             self.txt_description.insert(0, description)
             self.txt_price.insert(0, price)
-
 
     def clear_fields(self):
         self.txt_id_job.delete(0, tk.END)
         self.txt_description.delete(0, tk.END)
         self.txt_price.delete(0, tk.END)
 
+    def register_job(self):
+        try:
+            record_to_insert = self.read_fields()
+            self.job.insert_job(*record_to_insert)
+            self.tree_jobs.insert('', tk.END, values=record_to_insert)
+            self.iid = self.idd + 1
+            self.id = self.id + 1
+            self.clear_fields()
+            self.load_init_data()
+            print('Values registered.\n')
+        except:
+            print('No data to register.\n')
+
+    def read_fields(self):
+        try:
+            id_job = self.txt_id_job.get()
+            description = self.txt_description.get()
+            price = self.txt_price.get()
+            print("Operation OK\n")
+        except:
+            print("No data to read\n")
+
+        return id_job, description, price
+
+
     def back_view(self):
         ir.RouterView().win.deiconify()
         self.win.wm_withdraw()
+
 
