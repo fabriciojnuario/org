@@ -7,6 +7,7 @@ import spike80.view.IndexRouter as ir
 class ServiceView(tk.Frame):
 
     def __init__(self):
+        super().__init__()
         self.win = tk.Toplevel(height=600, width=600, relief="raised")
         self.job = Job()
         self.lb_id_job = tk.Label(self.win, text='id serviço:')
@@ -41,7 +42,7 @@ class ServiceView(tk.Frame):
 
         self.tree_jobs.pack(padx=10, pady=10)
 
-        self.tree_jobs.bind('<<TreeviewSelect>>', self.show_data_selected)
+        self.tree_jobs.bind('<<TreeviewSelected>>', self.show_data_selected)
 
         self.lb_id_job.place(x=100, y=50)
         self.txt_id_job.place(x=250, y=50)
@@ -75,8 +76,15 @@ class ServiceView(tk.Frame):
 
         print('Data loaded successfully.\n')
 
-    def show_data_selected(self):
+    def show_data_selected(self, event):
         self.clear_fields()
+        for selection in self.tree_jobs.selection():
+            item = self.tree_jobs.item(selection)
+            id_job, description, price = item['values'][0:2]
+            self.txt_id_job.insert(0, id_job)
+            self.txt_description.insert(0, description)
+            self.txt_price.insert(0, price)
+
 
     def clear_fields(self):
         self.txt_id_job.delete(0, tk.END)
