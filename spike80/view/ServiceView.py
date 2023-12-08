@@ -103,6 +103,16 @@ class ServiceView(tk.Frame):
         except:
             print('No data to register.\n')
 
+    def update_job(self):
+        try:
+            record_to_insert = self.read_fields()
+            self.job.update_job(*record_to_insert)
+            self.tree_jobs.delete(*self.tree_jobs.get_children())
+            self.load_init_data()
+            self.clear_fields()
+        except:
+            print("Operation no commited.\n")
+
     def read_fields(self):
         try:
             id_job = self.txt_id_job.get()
@@ -114,9 +124,6 @@ class ServiceView(tk.Frame):
 
         return id_job, description, price
 
-
     def back_view(self):
         ir.RouterView().win.deiconify()
         self.win.wm_withdraw()
-
-
