@@ -109,9 +109,9 @@ class Hostage:
         try:
             connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
-            record_to_insert = (rg_cliente, a)
-            sql_update_query = """ update public."hospedagem" set  "rg" = %s, "num_quarto" = %s, "dt_entrada" = %s, "dt_saida" = %s,
-                                "status" = %s where "id_hospedagem" = s% """
+            record_to_insert = (rg_cliente, num_quarto, dt_entrada, dt_saida, status, id_hospedagem)
+            sql_update_query = """update public."hospedagem" set  "rg" = %s, "num_quarto" = %s, "dt_entrada" = %s, 
+            "dt_saida" = %s, "status" = %s where "id_hospedagem" = s%"""
             cursor.execute(sql_update_query, record_to_insert)
             connection.commit()
 
