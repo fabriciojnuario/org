@@ -2,10 +2,8 @@ import spike80.dao.DaoService as ds
 
 
 class Job:
-    def __int__(self, id_job, price, description):
-        self.id_job = id_job
-        self.price = price
-        self.description = description
+    def __int__(self):
+        print("")
 
     def getId_job(self):
         return self.id_job
@@ -54,13 +52,12 @@ class Job:
         job.id_job = record_to_insert[0]
         job.description = record_to_insert[1]
         job.price = record_to_insert[2]
-        ds.DaoService.inserirServico(job.id_job, job.description, job.price)
+        ds.DaoService().inserirServico(job.id_job, job.description, job.price)
 
     def delete_job(self, id_job):
-        connection = ds.DaoService()
         job = Job()
         job.id_job = id_job
-        connection.excluiServico(job.id_job)
+        ds.DaoService().excluiServico(id_job,)
 
     def __str__(self):
         return f"{self.id_job}+{self.description}"

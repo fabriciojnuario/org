@@ -45,15 +45,15 @@ class DaoService:
             registry = cursor.fetchone()
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print(f"Error in select operation\n", error)
             else:
                 print(f"No connection\n", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print(f"Connection closed\n")
 
         return registry
@@ -88,7 +88,7 @@ class DaoService:
             connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
             record_to_insert = (descricao, valor, id_servico)
-            sql_insert_query = """ update public."servico" ,"descricao" = %s, "valor" = %s  where "id_servico" = %s """
+            sql_insert_query = """update public."servico" set "descricao" = %s, "valor" = %s  where "id_servico" = %s"""
 
             cursor.execute(sql_insert_query, record_to_insert)
             connection.commit()

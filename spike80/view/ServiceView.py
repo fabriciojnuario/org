@@ -19,9 +19,9 @@ class ServiceView(tk.Frame):
         self.txt_price = tk.Entry(self.win)
 
         self.btn_register = tk.Button(self.win, text='Cadastrar', command=self.register_job)
-        self.btn_update = tk.Button(self.win, text='Atualizar', command=None)
-        self.btn_delete = tk.Button(self.win, text='Excluir', command=None)
-        self.btn_clear = tk.Button(self.win, text='Limpar', command=self.clear_fields())
+        self.btn_update = tk.Button(self.win, text='Atualizar', command=self.update_job)
+        self.btn_delete = tk.Button(self.win, text='Excluir', command=self.delete_job)
+        self.btn_clear = tk.Button(self.win, text='Limpar', command=self.clear_fields)
         self.btn_query = tk.Button(self.win, text='Procurar', command=None)
         self.btn_back = tk.Button(self.win, text='Voltar', command=self.back_view)
 
@@ -113,9 +113,19 @@ class ServiceView(tk.Frame):
         except:
             print("Operation no commited.\n")
 
+    def delete_job(self):
+        try:
+            record_to_insert = self.read_fields()
+            self.job.delete_job(record_to_insert[0], )
+            self.tree_jobs.delete(*self.tree_jobs.get_children())
+            self.load_init_data()
+            self.clear_fields()
+        except:
+            print('No data to delete!\n');
+
     def read_fields(self):
         try:
-            id_job = self.txt_id_job.get()
+            id_job = int(self.txt_id_job.get())
             description = self.txt_description.get()
             price = self.txt_price.get()
             print("Operation OK\n")
