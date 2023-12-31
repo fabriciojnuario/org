@@ -4,7 +4,7 @@ import spike80.dao.DaoConnection as dc
 import spike80.resource.Access as ac
 
 
-class Hostage:
+class DaoHostage:
     def __int__(self):
         print('Contructor method')
 

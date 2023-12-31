@@ -28,8 +28,7 @@ class Job:
         return jobs
 
     def get_job(self, id_job):
-        connection = ds.DaoService()
-        registry = connection.selecionaServico(id_job)
+        registry = ds.DaoService().selecionaServico(id_job,)
         job = Job()
         job.id_job = registry[0]
         job.description = registry[1]
