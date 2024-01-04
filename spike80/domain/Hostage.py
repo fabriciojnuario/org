@@ -69,4 +69,3 @@ class Hostage:
         dh.DaoHostage().atualizaHospedagem(hostage.id_hostage, hostage.id_c, hostage.nroom,
                                            hostage.dcheckin, hostage.dcheckout, hostage.status)
 
-
