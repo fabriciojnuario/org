@@ -3,6 +3,7 @@ from tkinter import ttk
 import spike80.view.IndexRouter as ir
 from spike80.domain.Hostage import Hostage
 
+
 class HostageView:
     def __init__(self):
         self.win = tk.Toplevel(width=600, height=600, relief="raised")
@@ -38,4 +39,9 @@ class HostageView:
         self.data_columns = ('Nº hospedagem', ' Rg Cliente', 'Nº quarto',
                              'data entrada', 'data saída', 'status')
 
+        self.treeHostages = ttk.Treeview(self.win, columns=self.data_columns,
+                                         selectmode='browse', show='headings')
+        self.verscrlbar = ttk.Scrollbar(self.win, orient='vertical', command=self.treeHostages.yview)
+        self.verscrlbar.pack(side='right', fill='x')
+        self.treeHostages.configure(yscrollcommand=self.verscrlbar.set)
 
