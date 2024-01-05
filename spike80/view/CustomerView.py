@@ -10,7 +10,7 @@ class CustomerView:
         self.win = tk.Toplevel(width=600, height=600, relief="raised")
         self.customer = Custumer()
 
-        self.lb_id_customer = tk.Label(self.win, text='Id Custumer:')
+        self.lb_id_customer = tk.Label(self.win, text='Id Custumer: ')
         self.lb_name_customer = tk.Label(self.win, text='Name: ')
         self.lb_genre_customer = tk.Label(self.win, text='Genre: ')
         self.lb_phone_customer = tk.Label(self.win, text='phone: ')
