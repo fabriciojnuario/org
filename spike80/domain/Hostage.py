@@ -69,3 +69,18 @@ class Hostage:
         dh.DaoHostage().atualizaHospedagem(hostage.id_hostage, hostage.id_c, hostage.nroom,
                                            hostage.dcheckin, hostage.dcheckout, hostage.status)
 
+    def add_hostage(self, rg_cliente, num_quarto):
+        record_to_insert = (rg_cliente, num_quarto)
+        hostage = Hostage()
+        hostage.id_c = record_to_insert[0]
+        hostage.nroom = record_to_insert[1]
+        dh.DaoHostage().adicionaHospedagem(hostage.id_c, hostage.nroom)
+
+    def delete_hostage(self, id_hostage):
+        record_to_insert = (id_hostage,)
+        hostage = Hostage()
+        hostage.id_hostage = record_to_insert[0]
+        dh.DaoHostage().excluiHospedagem(hostage.id_hostage)
+
+    def __str__(self):
+        return f"{self.id_hostage, self.id_c}"
