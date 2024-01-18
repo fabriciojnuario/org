@@ -121,3 +121,20 @@ class HostageView:
         return id_hostage, id_c, nroom, dt_entrance, dt_exit, status
 
 
+    def register_hostage(self, id_c, nroom):
+        try:
+            self.iid = 0
+            self.id = 0
+            record_to_insert = self.read_fields()
+            self.hostage.add_hostage(record_to_insert[1], record_to_insert[2])
+            self.treeHostages.insert('', tk.END, iid=, values=record_to_insert)
+            self.iid = self.iid + 1
+            self.id = self.id + 1
+            self.clear_fields()
+            
+        except:
+            print('Operation no committed\n')
+
+    def clear_fields(self):
+        pass
+            
