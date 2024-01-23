@@ -3,6 +3,7 @@ import tkinter as tk
 import spike80.view.CustomerView as cv
 import spike80.view.RoomView as rv
 import spike80.view.ServiceView as sv
+import spike80.view.HostageView as hv
 
 
 class RouterView:
@@ -21,7 +22,7 @@ class RouterView:
 
         label_hv = tk.Label(frame_control, text="Acessar Hospedagem:")
         label_hv.place(x=50, y=120)
-        btn_hv = tk.Button(frame_control, text="ir", command=None, width=8)
+        btn_hv = tk.Button(frame_control, text="ir", command=self.access_hv, width=8)
         btn_hv.place(x=50, y=143)
 
         label_sv = tk.Label(frame_control, text="Acessar Serviço:")
@@ -60,3 +61,9 @@ class RouterView:
     def access_sv(self):
         sv.ServiceView()
         self.win.withdraw()
+
+    def access_hv(self):
+        hv.HostageView()
+        self.win.withdraw()
+
+

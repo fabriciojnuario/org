@@ -153,7 +153,7 @@ class CustomerView:
             self.clear_fields()
 
         except:
-            print(f'Operation no committed.\n')
+            print('Operation no committed.\n')
 
     def clear_fields(self):
         try:
