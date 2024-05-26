@@ -6,7 +6,7 @@ import spike80.resource.Access as ac
 
 class DaoHostage:
     def __int__(self):
-        print('Contructor method')
+        print('Constructor method.')
 
     def listaHospedagem(self):
         hostages = []

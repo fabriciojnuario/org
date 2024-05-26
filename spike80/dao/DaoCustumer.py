@@ -3,6 +3,7 @@ import psycopg2
 import spike80.dao.DaoConnection as dc
 import spike80.resource.Access as ac
 
+
 class DAOCustumer:
     def __int__(self):
         print("Contructor function\n")
@@ -48,15 +49,15 @@ class DAOCustumer:
 
         except(Exception, psycopg2.Error) as error:
             if connection:
-                print(f"No one register to return.\n", error)
+                print("No one register to return.\n", error)
             else:
-                print(f"No database connection.\n", error)
+                print("No database connection.\n", error)
 
         finally:
             if connection:
                 cursor.close()
                 connection.close()
-                print(f"Connection closed\n")
+                print("Connection closed\n")
 
         return registry
 
@@ -74,9 +75,9 @@ class DAOCustumer:
 
         except(Exception, psycopg2.Error) as error:
             if connection:
-                print(f"Error in insert operation\n", error)
+                print("Error in insert operation\n", error)
             else:
-                print(f"No connection\n", error)
+                print("No connection\n", error)
 
         finally:
             if connection:

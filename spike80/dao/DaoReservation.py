@@ -1,156 +1,132 @@
 import psycopg2
-from DaoConnection import DaoConnection
-from spike80.domain.Reservation import Reservation
+import spike80.dao.DaoConnection as dc
+import spike80.resource.Access as ac
 
 
 class DaoReservation:
     def __int__(self):
-        self.connection = DaoConnection()
-        self.reservation = Reservation()
+        print('Constructor method.')
 
     def listaReserva(self):
+        connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
+        reservas = []
         try:
-            cursor = self.connection.cursor()
+            cursor = connection.cursor()
             sql_select_query = """ select * from public."reserva"""""
             cursor.execute(sql_select_query)
             registers = cursor.fetchall()
-            for registry in registers:
-                self.reservation.id_reserva = registry[0]
-                self.reservation.id_c = registry[1]
-                self.reservation.nroom = registry[2]
-                self.reservation.dreservation = registry[3]
-                self.reservation.qdays = registry[4]
-                self.reservation.dcheckin = registry[5]
-                self.reservation.status = registry[6]
-
+            for i in range(len(registers)):
+                reservas.append(registers[i])
             print(registers)
-            print(repr(self.reservation))
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print("No data\n", error)
             else:
                 print("No connection.\n", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
-                print(f"Connection closed\n")
+                connection.close()
+                print("Connection closed\n")
 
-        return self.reservation
+        return reservas
 
     def selecionaReserva(self, id_reserva):
         try:
-            cursor = self.connection.cursor()
+            connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
+            cursor = connection.cursor()
             sql_select_query = """ select * from public."reserva" where
                                     "id_reserva" = %s"""
-            cursor.execute(sql_select_query,(id_reserva,))
+            cursor.execute(sql_select_query, (id_reserva,))
             registry = cursor.fetchone()
-            self.reservation.id_reserva = registry[0]
-            self.reservation.id_c = registry[1]
-            self.reservation.nroom = registry[2]
-            self.reservation.dreservation = registry[3]
-            self.reservation.qdays = registry[4]
-            self.reservation.dcheckin = registry[5]
-            self.reservation.status = registry[6]
-
-            print(str(self.reservation))
+            print(registry)
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
-                print(f"Error in select operation\n")
+            if connection:
+                print("Error in select operation\n", error)
             else:
-                print(f"No connection.\n")
+                print("No connection.\n", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
-                print(f"Connection closed.\n")
+                connection.close()
+                print("Connection closed.\n")
+
+        return registry
 
     def adicionaReserva(self, rg_cliente, num_quarto, qt_dias, dt_entrada):
         try:
-            self.reservation.id_reservation = "default"
-            self.reservation.id_c = rg_cliente
-            self.reservation.nroom = num_quarto
-            self.reservation.qdays = qt_dias
-            self.reservation.dcheckin = dt_entrada
-            cursor = self.connection.cursor
-            record_to_insert = (vars(self.reservation))
+            connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
+            cursor = connection.cursor()
+            record_to_insert = ("default", rg_cliente, num_quarto, qt_dias, dt_entrada)
             cursor.callproc("adicionareserva", record_to_insert)
+            connection.commit()
             count = cursor.rowcount
-            self.connection.commit()
+
             print(count, f"Reserva adicionada")
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print("Erro ao adicionar reserva", error)
             else:
                 print("No connection.", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print(f"Connection closed.\n")
 
     def atualizaReserva(self, id_reserva, rg_cliente, num_quarto, dt_reserva, qt_dias,
                         dt_entrada, status):
         try:
-            self.reservation.id_reserva = id_reserva
-            self.reservation.id_c = rg_cliente
-            self.reservation.nroom = num_quarto
-            self.reservation.dreservation = dt_reserva
-            self.reservation.qdays = qt_dias
-            self.reservation.dcheckin = dt_entrada
-            self.reservation.status = status
-            cursor = self.connection.cursor()
-            record_to_insert = (vars(self.reservation))
+            connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
+            cursor = connection.cursor()
+            record_to_insert = (id_reserva, rg_cliente, num_quarto, dt_reserva, dt_entrada, qt_dias)
             sql_insert_query = """ update public."reserva" set "id_hospedagem" = %s,
                           "rg" = %s, "num_quarto" = %s, "dt_reserva" = %s,
                           "dias" = %s, "dt_entrada" = %s, "status" = %s"""
             cursor.execute(sql_insert_query, record_to_insert)
+            connection.commit()
             count = cursor.rowcount
-            self.connection.commit()
             print(f"Update sucessfull\n", count, "row(s) affected.")
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
+            if connection:
                 print("Error in update operation\n", error)
             else:
                 print("No connection.\n", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
+                connection.close()
                 print(f"Connection closed.\n")
 
     def excluiReserva(self, id_reserva, num_quarto):
         try:
-            self.reservation.id_reserva = id_reserva
-            self.reservation.nroom = num_quarto
-            cursor = self.connection.cursor()
+            connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
+            cursor = connection.cursor()
             sql_delete_query = """delete from public."reserva" where
                                             "id_reserva" = %s;
                                    update public."quarto" set status = 'D' where "reserva".num_quarto = %s;"""
-
-            cursor.execute(sql_delete_query, (self.reservation.id_reserva,
-                                              self.reservation.nroom))
-
-            self.connection.commit()
+            record_to_insert = (id_reserva, num_quarto)
+            cursor.execute(sql_delete_query, record_to_insert)
+            connection.close()
             count = cursor.rowcount
-            print(f"Delete operation sucessfull\n", count, "row(s) affected")
+            print("Delete operation ok", count, "row(s) affected\n")
 
         except(Exception, psycopg2.Error) as error:
-            if self.connection:
-                print(f"Error in delete operation\n", error)
+            if connection:
+                print("Error in delete operation\n", error)
             else:
-                print(f"No connection\n", error)
+                print("No connection\n", error)
 
         finally:
-            if self.connection:
+            if connection:
                 cursor.close()
-                self.connection.close()
-                print(f"Connection closed\n")
+                connection.close()
+                print("Connection closed\n")
