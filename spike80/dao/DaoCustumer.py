@@ -121,13 +121,13 @@ class DAOCustumer:
 
             connection.commit()
             count = cursor.rowcount
-            print(f"Delete operation ok", count, f"row(s) affected\n")
+            print("Delete operation ok", count, "row(s) affected\n")
 
         except(Exception, psycopg2.Error) as error:
             if connection:
                 print("Error in delete operation\n", error)
             else:
-                print(f"No connection\n")
+                print("No connection\n")
 
         finally:
             if connection:
