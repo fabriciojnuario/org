@@ -99,31 +99,31 @@ class ReservationView:
                                 bg="#4169E1", command=NONE)
         self.btn_query.grid(row=0, column=4, padx=75)
 
-        self.name_columns = ("num_reserva"," rg, num_quarto","dt_reserva ", "qt dias"
-                             "dt_entrada"," status")
+        self.name_columns = ('id_reserva', 'rg_cliente', 'quarto', 'data_reserva', 'qta_dias',
+                             'data_entrada', 'status')
 
         self.tree_reservation = ttk.Treeview(self.win, columns=self.name_columns,
                                              selectmode="browse", show='headings')
-        self.verscrlbar = ttk.Scrollbar(self.win, orient="vertical",  command=self.tree_reservation.yview)
+        self.verscrlbar = ttk.Scrollbar(self.win, orient="vertical", command=self.tree_reservation.yview)
         self.verscrlbar.pack(side="right", fill="x")
-        self.verscrlbar.place(x=574, y=342, height=201)
+        self.verscrlbar.place(x=541, y=342, height=201)
         self.tree_reservation.configure(yscrollcommand=self.verscrlbar.set)
 
-       # self.tree_reservation.heading(0, text="id reserva")
-       # self.tree_reservation.heading(1, text="rg cliente")
-       # self.tree_reservation.heading(2, text="nqrt")
-       # self.tree_reservation.heading(3, text="dtr")
-       # self.tree_reservation.heading(4, text="qtd dias")
-       # self.tree_reservation.heading(5, text="dt entrada")
-       # self.tree_reservation.heading(6, text="status")
+        self.tree_reservation.heading(0, text="id reserva")
+        self.tree_reservation.heading(1, text="rg cliente")
+        self.tree_reservation.heading(2, text="quarto")
+        self.tree_reservation.heading(3, text="data reserva")
+        self.tree_reservation.heading(4, text="qtd dias")
+        self.tree_reservation.heading(5, text="data entrada")
+        self.tree_reservation.heading(6, text="status")
 
-       # self.tree_reservation.column(0, minwidth=0, width=75)
-       # self.tree_reservation.column(1, minwidth=0, width=80)
-       # self.tree_reservation.column(2, minwidth=0, width=35)
-        #  self.tree_reservation.column(3, minwidth=0, width=50)
-        #self.tree_reservation.column(4, minwidth=0, width=100)
-       # self.tree_reservation.column(5, minwidth=0, width=100)
-        #self.tree_reservation.column(6, minwidth=0, width=100)
+        self.tree_reservation.column(0, minwidth=0, width=75)
+        self.tree_reservation.column(1, minwidth=0, width=80)
+        self.tree_reservation.column(2, minwidth=0, width=65)
+        self.tree_reservation.column(3, minwidth=0, width=90)
+        self.tree_reservation.column(4, minwidth=0, width=55)
+        self.tree_reservation.column(5, minwidth=0, width=95)
+        self.tree_reservation.column(6, minwidth=0, width=50)
 
         self.tree_reservation.pack(pady=5, padx=10)
 
