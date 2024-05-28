@@ -7,7 +7,7 @@ class DaoReservation:
     def __int__(self):
         print('Constructor method.')
 
-    def listaReserva(self):
+    def get_all_reservations(self):
         connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
         reservas = []
         try:
@@ -33,7 +33,7 @@ class DaoReservation:
 
         return reservas
 
-    def selecionaReserva(self, id_reserva):
+    def get_reservation(self, id_reserva):
         try:
             connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
@@ -57,7 +57,7 @@ class DaoReservation:
 
         return registry
 
-    def adicionaReserva(self, rg_cliente, num_quarto, qt_dias, dt_entrada):
+    def add_reservation(self, rg_cliente, num_quarto, qt_dias, dt_entrada):
         try:
             connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
@@ -80,12 +80,12 @@ class DaoReservation:
                 connection.close()
                 print(f"Connection closed.\n")
 
-    def atualizaReserva(self, id_reserva, rg_cliente, num_quarto, dt_reserva, qt_dias,
+    def update_reservation(self, id_reserva, rg_cliente, num_quarto, dt_reserva, qt_dias,
                         dt_entrada, status):
         try:
             connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
-            record_to_insert = (id_reserva, rg_cliente, num_quarto, dt_reserva, dt_entrada, qt_dias)
+            record_to_insert = (id_reserva, rg_cliente, num_quarto, dt_reserva, dt_entrada, qt_dias, status)
             sql_insert_query = """ update public."reserva" set "id_hospedagem" = %s,
                           "rg" = %s, "num_quarto" = %s, "dt_reserva" = %s,
                           "dias" = %s, "dt_entrada" = %s, "status" = %s"""
@@ -106,7 +106,7 @@ class DaoReservation:
                 connection.close()
                 print(f"Connection closed.\n")
 
-    def excluiReserva(self, id_reserva, num_quarto):
+    def delete_reservation(self, id_reserva, num_quarto):
         try:
             connection = dc.DaoConnection.get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
