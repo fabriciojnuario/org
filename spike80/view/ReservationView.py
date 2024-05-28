@@ -140,6 +140,29 @@ class ReservationView:
         self.main_menu.add_cascade(label="Arquivo", menu=self.file_menu)
         self.win.config(menu=self.main_menu)
 
+        self.load_init_data()
+
+    def load_init_data(self):
+        try:
+            self.id = 0
+            self.iid = 0
+            registers = self.reservation.get_all_reservations()
+            print(type(registers))
+            for i in range(len(registers)):
+                reservation = registers[i]
+                print(reservation)
+                self.tree_reservation.insert('', tkinter.END, iid=self.iid,
+                                             values=(reservation.id_reserva, reservation.id_c, reservation.nroom,
+                                                     reservation.dreservation, reservation.qdays, reservation.dcheckin,
+                                                     reservation.status))
+                self.iid = self.iid + 1
+                self.id = self.id + 1
+
+            print("Load data successfully\n ")
+
+        except:
+            print("No data to show\n")
+
     def back_view(self):
         ir.RouterView().win.deiconify()
         self.win.withdraw()
