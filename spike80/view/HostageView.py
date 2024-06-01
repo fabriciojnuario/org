@@ -131,7 +131,7 @@ class HostageView:
 
         return id_hostage, id_c, nroom, dt_entrance, dt_exit, status
 
-    def register_hostage(self, id_c, nroom):
+    def register_hostage(self):
         try:
             self.iid = 0
             self.id = 0

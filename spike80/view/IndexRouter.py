@@ -5,6 +5,7 @@ import spike80.view.RoomView as rv
 import spike80.view.ServiceView as sv
 import spike80.view.HostageView as hv
 import spike80.view.ReservationView as rs
+import spike80.view.JobView as js
 
 
 class RouterView:
@@ -33,7 +34,7 @@ class RouterView:
 
         label_av = tk.Label(frame_control, text="Acessar atendimento:")
         label_av.place(x=230, y=50)
-        btn_av = tk.Button(frame_control, text="ir", command=None,
+        btn_av = tk.Button(frame_control, text="ir", command=self.access_js,
                            width=8)
         btn_av.place(x=230, y=73)
 
@@ -69,4 +70,8 @@ class RouterView:
 
     def access_rs(self):
         rs.ReservationView()
+        self.win.withdraw()
+
+    def access_js(self):
+        js.JobView()
         self.win.withdraw()

@@ -13,7 +13,7 @@ class DaoHostage:
         try:
             connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
-            sql_select_query = """ select * from public."hospedagem"""""
+            sql_select_query = """ select * from public."hospedagem" """
             cursor.execute(sql_select_query)
             registers = cursor.fetchall()
             for i in range(len(registers)):

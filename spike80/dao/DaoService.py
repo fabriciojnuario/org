@@ -73,9 +73,9 @@ class DaoService:
 
         except(Exception, psycopg2.Error) as error:
             if connection:
-                print(f"Error in insert operation", error)
+                print("Error in insert operation", error)
             else:
-                print(f"No connection")
+                print("No connection")
 
         finally:
             if connection:
@@ -97,9 +97,9 @@ class DaoService:
 
         except(Exception, psycopg2.Error) as error:
             if connection:
-                print(f"Error in update operation", error)
+                print("Error in update operation", error)
             else:
-                print(f"No connection")
+                print("No connection")
 
         finally:
             if connection:
@@ -120,12 +120,12 @@ class DaoService:
 
         except(Exception, psycopg2.Error) as error:
             if connection:
-                print(f"Error in delete operation", error)
+                print("Error in delete operation", error)
             else:
-                print(f"No connection", error)
+                print("No connection", error)
 
         finally:
             if connection:
                 cursor.close()
                 connection.close()
-                print(f"Connection closed.")
+                print("Connection closed.")
