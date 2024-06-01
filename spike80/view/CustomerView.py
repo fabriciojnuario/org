@@ -91,7 +91,7 @@ class CustomerView:
                 self.iid = self.iid + 1
                 self.id = self.id + 1
 
-            print('Load successfully.\n')
+            print('Load data successfully.\n')
 
         except:
             print(f'No data to show.\n')

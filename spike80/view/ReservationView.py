@@ -1,7 +1,6 @@
 import tkinter
 from tkinter import *
 from tkinter import ttk
-from ttkthemes import ThemedTk
 import spike80.view.IndexRouter as ir
 from spike80.domain.Reservation import Reservation
 
@@ -80,19 +79,19 @@ class ReservationView:
         self.frame_button = Frame(self.win, bg="#6495ED")
         self.frame_button.pack(fill="x", pady="15", padx="10")
         self.btn_register = Button(self.frame_button, text="Register", width=8,
-                                   bg="#4169E1", command=NONE)
+                                   bg="#4169E1", command=self.register_reservation)
         self.btn_register.grid(row=0, column=0, padx=5)
 
         self.btn_update = Button(self.frame_button, text="Update", width=8,
-                                 bg="#4169E1", command=NONE)
+                                 bg="#4169E1", command=self.update_reservation)
         self.btn_update.grid(row=0, column=1, padx=5)
 
         self.btn_delete = Button(self.frame_button, text="Delete", width=8,
-                                 bg="#4169E1", command=NONE)
+                                 bg="#4169E1", command=self.delete_reservation)
         self.btn_delete.grid(row=0, column=2, padx=5)
 
         self.btn_clear = Button(self.frame_button, text="Clear", width=8,
-                                bg="#4169E1", command=NONE)
+                                bg="#4169E1", command=self.clear_fields)
         self.btn_clear.grid(row=0, column=3, padx=5)
 
         self.btn_query = Button(self.frame_button, text="query", width=8,
@@ -127,9 +126,11 @@ class ReservationView:
 
         self.tree_reservation.pack(pady=5, padx=10)
 
+        self.tree_reservation.bind('<<TreeviewSelect>>', self.show_data_selected)
+
         self.frame_8 = Frame(self.win, bg="#6495ED")
         self.frame_8.pack(fill="x", padx=5, pady=10)
-        self.btn_exit = Button(self.frame_8, text="Exit", width=8, bg="#6495ED")
+        self.btn_exit = Button(self.frame_8, text="Exit", width=8, bg="#6495ED", command=self.win.destroy)
         self.btn_exit.pack(side=RIGHT)
 
         self.main_menu = Menu(self.win)
@@ -162,6 +163,85 @@ class ReservationView:
 
         except:
             print("No data to show\n")
+
+    def show_data_selected(self, event):
+        self.clear_fields()
+        for selection in self.tree_reservation.selection():
+            item = self.tree_reservation.item(selection)
+            id_reservation, id_c, nroom, dreservation = item['values'][0:3]
+            qdays, dcheckin, status = item['values'][4:6]
+            self.text_id_reservation.insert(0, id_reservation)
+            self.text_rg_cliente.insert(0, id_c)
+            self.text_num_quarto.insert(0, nroom)
+            self.text_dt_reserva.insert(0, dreservation)
+            self.text_qtd_dias.insert(0, qdays)
+            self.text_dt_entrada.insert(0, dcheckin)
+            self.text_status.insert(0, status)
+
+    def read_fields(self):
+        try:
+            id_reservation = self.text_id_reservation.get()
+            id_c = self.text_rg_cliente.get()
+            nroom = self.text_num_quarto.get()
+            dreservation = self.text_dt_reserva.get()
+            qdays = self.text_qtd_dias.get()
+            dcheckin = self.text_dt_entrada.get()
+            status = self.text_status.get()
+
+        except:
+            print("No data to read\n")
+
+        return id_reservation, id_c, nroom, dreservation, qdays, dcheckin, status
+
+
+    def register_reservation(self):
+        try:
+            record_to_insert = self.read_fields()
+            self.reservation.insert_reservation(*record_to_insert)
+
+            self.tree_reservation.insert("", END, iid = self.iid, values=record_to_insert)
+
+            self.iid = self.iid + 1
+            self.id = self.id + 1
+            self.clear_fields()
+
+        except:
+            print("Operation no committed")
+
+    def update_reservation(self):
+        try:
+            record_to_insert = self.read_fields()
+            self.reservation.update_reservation(*record_to_insert)
+
+            self.tree_reservation.delete(*self.tree_reservation.get_children())
+            self.load_init_data()
+            self.clear_fields()
+
+        except:
+            print("Operation no committed\n")
+
+    def delete_reservation(self):
+        try:
+            record_to_insert = self.read_fields()
+            self.reservation.delete_reservation(record_to_insert[0], record_to_insert[1])
+
+            self.tree_reservation.delete(*self.tree_reservation.get_children())
+            self.load_init_data()
+            self.clear_fields()
+        except:
+            print("Operation no committed\n")
+
+    def clear_fields(self):
+        try:
+            self.text_id_reservation.delete(0, END)
+            self.text_rg_cliente.delete(0, END)
+            self.text_num_quarto.delete(0, END)
+            self.text_dt_reserva.delete(0, END)
+            self.text_qtd_dias.delete(0, END)
+            self.text_dt_entrada.delete(0, END)
+            self.text_status.delete(0, END)
+        except:
+            print("No data to clear\n")
 
     def back_view(self):
         ir.RouterView().win.deiconify()
