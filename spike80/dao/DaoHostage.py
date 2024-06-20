@@ -63,8 +63,8 @@ class DaoHostage:
         try:
             connection = dc.DaoConnection().get_connection(ac.name, ac.psw)
             cursor = connection.cursor()
-            record_to_insert = (rg_cliente, num_quarto)
-            cursor.callproc('adicionahospedagem', record_to_insert)
+            #record_to_insert = (rg_cliente, num_quarto)
+            cursor.callproc('adicionahospedagem', rg_cliente, num_quarto)
             connection.commit()
             count = cursor.rowcount
             print(count, "Registro incluido com sucesso")
